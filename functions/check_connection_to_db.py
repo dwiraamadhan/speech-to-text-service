@@ -1,9 +1,10 @@
 from pymongo.mongo_client import MongoClient
+import os
 
 # check connection to mongo db
 def check_connection():
     # Create a new client and connect to the server
-    uri = "mongodb://localhost:27017/"
+    uri = os.getenv("MONGODB_URL")
     client = MongoClient(uri)
 
 

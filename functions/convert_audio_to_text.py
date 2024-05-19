@@ -16,7 +16,7 @@ def convert_audio_to_text(audio_file):
 
         # create object trascript
         transcript = openai.Client().audio.transcriptions.create(
-            model="whisper-1",
+            model=os.getenv("SPEECH_TO_TEXT_MODEL"),
             file=audio_file,
             response_format="text"
         )

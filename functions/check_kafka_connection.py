@@ -1,11 +1,11 @@
 from confluent_kafka import Producer, KafkaError
-import socket
+import socket, os
 
 def check_kafka_connection():
     try:
         # kafka configuration
         conf = {
-            "bootstrap.servers" : "localhost:9092",
+            "bootstrap.servers" : os.getenv("BROKER_SERVER"),
             "client.id" : socket.gethostname()
         }
 

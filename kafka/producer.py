@@ -1,12 +1,12 @@
 from confluent_kafka import Producer
-import socket
+import socket, os
 
 
 # create function to send transcription to kafka
 def send_to_kafka(message):
     # kafka configuration
     conf = {
-        "bootstrap.servers" : "localhost:9092",
+        "bootstrap.servers" : os.getenv("BROKER_SERVER"),
         "client.id" : socket.gethostname()
     }
 
@@ -21,6 +21,6 @@ def send_to_kafka(message):
             print('Message delivered to %s [%d]' % (msg.topic(), msg.partition()))
 
     # send transcription to kafka
-    producer.produce(topic="topicPertama", value=message, callback=delivery_report)
+    producer.produce(topic=os.getenv("KAFKA_TOPIC"), value=message, callback=delivery_report)
     producer.flush()
 
