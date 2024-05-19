@@ -1,6 +1,9 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi.responses import JSONResponse
 from dotenv import load_dotenv, find_dotenv
 from functions.convert_audio_to_text import convert_audio_to_text
+from functions.check_connection_to_db import check_connection
+from functions.check_kafka_connection import check_kafka_connection
 from kafka.producer import send_to_kafka
 
 router = APIRouter()
@@ -29,3 +32,19 @@ async def transcribe_audio(audio_file : UploadFile = File(...)):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# check health
+@router.get("/health")
+async def health_check():
+    return JSONResponse(status_code=200, content={"status": "healthy"})
+
+# check readiness
+@router.get("/ready")
+async def readiness_check():
+    # check connection to mongoDB
+    isReady = check_connection() and check_kafka_connection()
+    if isReady:
+        return JSONResponse(status_code=200, content={"status": "ready"})
+    else:
+        return JSONResponse(status_code=503, content={"status": "not ready"})

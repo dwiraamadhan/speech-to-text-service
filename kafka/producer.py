@@ -6,8 +6,8 @@ import socket
 def send_to_kafka(message):
     # kafka configuration
     conf = {
-    "bootstrap.servers" : "localhost:9092",
-    "client.id" : socket.gethostname()
+        "bootstrap.servers" : "localhost:9092",
+        "client.id" : socket.gethostname()
     }
 
     # create object producer kafka
