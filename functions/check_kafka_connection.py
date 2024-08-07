@@ -6,7 +6,7 @@ def check_kafka_connection():
         # kafka configuration
         conf = {
             "bootstrap.servers" : os.getenv("BROKER_SERVER"),
-            "client.id" : socket.gethostname()
+            "client.id" : socket.gethostname(),
         }
 
         # check connection kafka with getting list of topics

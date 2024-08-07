@@ -7,7 +7,7 @@ def send_to_kafka(message):
     # kafka configuration
     conf = {
         "bootstrap.servers" : os.getenv("BROKER_SERVER"),
-        "client.id" : socket.gethostname()
+        "client.id" : socket.gethostname(),
     }
 
     # create object producer kafka
